@@ -42,4 +42,32 @@ const getProductById = async (req, res) => {
   client.close();
 };
 
+// Updates the stock of a product based on id
+// relies on the frontend sending the updated stock amount
+const updateStock = async (req, res) => {
+  const _id = req.params._id;
+  const query = { _id };
+  const newValues = {
+    $set: {
+      // req.body.numInStock should be the updated stock amount sent from the front end
+      numInStock: req.body.numInStock,
+    },
+  };
+  const client = new MongoClient(MONGO_URI, options);
+  try {
+    await client.connect();
+    const db = client.db("Products").updateOne(query, newValues);
+    res
+      .status(200)
+      .json({
+        status: 200,
+        data: newValues.$set,
+        message: "Stock has been updated",
+      });
+  } catch (err) {
+    res.status(500).json({ status: 500, data: req.body, message: err.message });
+  }
+  client.close();
+};
+
 module.exports = { getProducts, getProductById };
