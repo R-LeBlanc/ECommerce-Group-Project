@@ -30,11 +30,16 @@ const getProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   const _id = req.params._id;
   const client = new MongoClient(MONGO_URI, options);
+  console.log(typeof _id);
   try {
     await client.connect();
     const db = client.db("ReservoirCats");
 
-    const product = await db.collection("Products").findOne({ _id });
+    const product = await db
+      .collection("Products")
+      //   the id is not stored as a string so the _id from the req has to be parsed into a number
+      .findOne({ _id: parseInt(_id) });
+    console.log(product);
     res.status(200).json({ status: 200, data: product });
   } catch (err) {
     res.status(500).json({ status: 500, message: err.message });
@@ -57,17 +62,15 @@ const updateStock = async (req, res) => {
   try {
     await client.connect();
     const db = client.db("Products").updateOne(query, newValues);
-    res
-      .status(200)
-      .json({
-        status: 200,
-        data: newValues.$set,
-        message: "Stock has been updated",
-      });
+    res.status(200).json({
+      status: 200,
+      data: newValues.$set,
+      message: "Stock has been updated",
+    });
   } catch (err) {
     res.status(500).json({ status: 500, data: req.body, message: err.message });
   }
   client.close();
 };
 
-module.exports = { getProducts, getProductById };
+module.exports = { getProducts, getProductById, updateStock };
