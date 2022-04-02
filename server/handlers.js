@@ -61,7 +61,8 @@ const updateStock = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
-    const db = client.db("Products").updateOne(query, newValues);
+    const db = client.db("ReservoirCats");
+    await db.collection("Products").updateOne(query, newValues);
     res.status(200).json({
       status: 200,
       data: newValues.$set,
