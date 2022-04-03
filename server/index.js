@@ -3,7 +3,12 @@
 const express = require("express");
 const morgan = require("morgan");
 
-const { getProducts, getProductById, updateStock } = require("./handlers");
+const {
+  getProducts,
+  getProductById,
+  updateStock,
+  getCompanies,
+} = require("./handlers");
 
 const PORT = 4000;
 
@@ -33,6 +38,8 @@ express()
   .get("/products/:_id", getProductById)
   // will update the stock of the product base on id
   .patch(`/products/:_id`, updateStock)
+  // returns all the companies
+  .get("/companies", getCompanies)
   // catch all endpoint
   .get(`*`, (req, res) => {
     res.status(404).json({

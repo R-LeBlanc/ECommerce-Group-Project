@@ -74,4 +74,21 @@ const updateStock = async (req, res) => {
   client.close();
 };
 
-module.exports = { getProducts, getProductById, updateStock };
+const getCompanies = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+  await client.connect();
+  const db = client.db("ReservoirCats");
+
+  db.collection("Companies")
+    .find({})
+    .toArray(function (err, result) {
+      if (err) {
+        console.log(err);
+        res.status(500).json({ status: 500, message: err.message });
+      }
+      res.status(200).json({ status: 200, data: result });
+      client.close();
+    });
+};
+
+module.exports = { getProducts, getProductById, updateStock, getCompanies };
