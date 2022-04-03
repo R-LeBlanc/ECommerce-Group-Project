@@ -30,7 +30,6 @@ const getProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   const _id = req.params._id;
   const client = new MongoClient(MONGO_URI, options);
-  console.log(typeof _id);
   try {
     await client.connect();
     const db = client.db("ReservoirCats");
@@ -74,6 +73,7 @@ const updateStock = async (req, res) => {
   client.close();
 };
 
+// Retrieves all the companies listed in the database
 const getCompanies = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   await client.connect();
@@ -91,4 +91,29 @@ const getCompanies = async (req, res) => {
     });
 };
 
-module.exports = { getProducts, getProductById, updateStock, getCompanies };
+// retireves a company based on the company id
+const getCompany = async (req, res) => {
+  const _id = req.params._id;
+
+  const client = new MongoClient(MONGO_URI, options);
+  try {
+    await client.connect();
+    const db = client.db("ReservoirCats");
+    const company = await db
+      .collection("Companies")
+      .findOne({ _id: parseInt(_id) });
+    res.status(200).json({ status: 200, data: company });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ status: 500, message: err.mesage });
+  }
+  client.close();
+};
+
+module.exports = {
+  getProducts,
+  getProductById,
+  updateStock,
+  getCompanies,
+  getCompany,
+};

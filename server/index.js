@@ -8,6 +8,7 @@ const {
   getProductById,
   updateStock,
   getCompanies,
+  getCompany,
 } = require("./handlers");
 
 const PORT = 4000;
@@ -40,6 +41,8 @@ express()
   .patch(`/products/:_id`, updateStock)
   // returns all the companies
   .get("/companies", getCompanies)
+  // returns a company by company ID
+  .get("/companies/:_id", getCompany)
   // catch all endpoint
   .get(`*`, (req, res) => {
     res.status(404).json({
