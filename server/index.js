@@ -9,6 +9,7 @@ const {
   updateStock,
   getCompanies,
   getCompany,
+  postPurchases,
 } = require("./handlers");
 
 const PORT = 4000;
@@ -43,6 +44,9 @@ express()
   .get("/companies", getCompanies)
   // returns a company by company ID
   .get("/companies/:_id", getCompany)
+  // will post purchases made to a Purchases collection
+  // (incase we need it for a strech goal)
+  .post("/purchases", postPurchases)
   // catch all endpoint
   .get(`*`, (req, res) => {
     res.status(404).json({

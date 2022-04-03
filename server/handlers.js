@@ -115,10 +115,30 @@ const getCompany = async (req, res) => {
   client.close();
 };
 
+//Will post the purchases the client makes to the data base
+// (Not used yet, for strech goal)
+// Format of data undecided (working template)
+const postPurchases = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+  try {
+    await client.connect();
+    const db = client.db("ReservoirCats");
+
+    await db.collection("Purchases").insertOne(req.body);
+    res
+      .status(201)
+      .json({ status: 201, data: req.body, message: "Purchase created" });
+  } catch (err) {
+    res.status(500).json({ status: 500, data: req.body, message: err.message });
+  }
+  client.close();
+};
+
 module.exports = {
   getProducts,
   getProductById,
   updateStock,
   getCompanies,
   getCompany,
+  postPurchases,
 };
