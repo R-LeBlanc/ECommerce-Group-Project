@@ -1,8 +1,15 @@
 "use strict";
-
+// This is the dotenv configuration for everyone else
 require("dotenv").config();
 const { MongoClient } = require("mongodb");
 const { MONGO_URI } = process.env;
+
+// This is the dotenv configuration for Ross,
+// Since his computer just ALWAYS has to be different! lol
+// const { MongoClient } = require("mongodb");
+// const path = require('path')
+// require('dotenv').config({ path: path.resolve(__dirname, './.env') })
+// const {MONGO_URI} = process.env;
 
 const options = {
   useNewUrlParser: true,
