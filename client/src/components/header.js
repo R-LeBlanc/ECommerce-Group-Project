@@ -23,8 +23,8 @@ const Header = () => {
     </>
   );
 };
-const Title = styled.h2`
-  color: #6d807b;
+const Title = styled.h1`
+  color: var(--color-accent);
 `;
 const Logo = styled.span`
   display: flex;
@@ -40,13 +40,11 @@ const Cart = styled.span``;
 const SubContainer = styled.span`
   display: flex;
   cursor: pointer;
-  color: #93938e;
 `;
 const Products = styled.span`
   display: flex;
   justify-content: center;
   cursor: pointer;
-  color: #93938e;
 `;
 const Img = styled.img`
   height: 50px;
@@ -58,7 +56,7 @@ const Wrapper = styled.div`
   height: 60px;
   justify-content: space-between;
   align-items: center;
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
 `;
 
 export default Header;

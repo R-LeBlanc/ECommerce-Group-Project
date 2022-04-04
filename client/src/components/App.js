@@ -4,10 +4,12 @@ import SingleItemPage from "./SingleItemPage";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Routes, Route } from "react-router";
 import AllProduct from "./AllProduct";
+import GlobalStyles from "./GlobalStyles";
 
 function App() {
   return (
     <>
+      <GlobalStyles />
       <Header></Header>
       <Router>
         <Routes>
