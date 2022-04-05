@@ -33,7 +33,6 @@ const SingleItemPage = () => {
           <h2>{items.name}</h2>
           <p>{items.price}</p>
           <p>we have {items.numInStock} in stock act fast!!</p>
-          {/* <Button onClick={() => setAdd("added to your cart")}>{add}</Button> */}
           <Button onClick={() => {
               addToCart({
                 _id: items._id,
@@ -45,7 +44,7 @@ const SingleItemPage = () => {
                 category: items.category,
                 img: items.imageSrc
               }); 
-              setAdd("Added to your cart")
+              setAdd("Added to your cart");
               }}>
                 {add}
               </Button>

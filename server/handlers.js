@@ -5,7 +5,7 @@ const { MongoClient } = require("mongodb");
 const { MONGO_URI } = process.env;
 
 // This is the dotenv configuration for Ross,
-// Since his computer just ALWAYS has to be different! lol
+// Since his computer just ALWAYS has to be different!
 // const { MongoClient } = require("mongodb");
 // const path = require('path')
 // require('dotenv').config({ path: path.resolve(__dirname, './.env') })

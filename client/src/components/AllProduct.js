@@ -21,7 +21,6 @@ const AllProduct = () => {
           <SubContainer>
             <h2> {product.name}</h2>
             <p>{product.price}</p>
-<<<<<<< HEAD
             <p>we have {product.numInStock}items in stock</p>
             <Button onClick={() => {
               addToCart({
@@ -38,10 +37,6 @@ const AllProduct = () => {
               }}>
                 {add}
               </Button>
-=======
-            <p>we have {product.numInStock} items in stock</p>
-            <Button onClick={() => setAdd("added to your cart")}>{add}</Button>
->>>>>>> master
           </SubContainer>
         </Wrapper>
       </Container>
