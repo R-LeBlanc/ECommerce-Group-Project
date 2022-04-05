@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
-const AllProduct = () => {
-  const [allProducts, setAllProducts] = useState(null);
-  const [add, setAdd] = useState("add to cart");
-  useEffect(() => {
-    const allItems = async () => {
-      const response = await fetch(`/products`);
-      const data = await response.json();
+import { ProductsContext } from "./ProductContext";
+import { CartContext } from "./CartContext";
 
-      setAllProducts(data.data);
-    };
-    allItems();
-  }, []);
+const AllProduct = () => {
+  const {allProducts} = React.useContext(ProductsContext);
+  const {cartState, addToCart} = useContext(CartContext);
+  console.log({cartState});
+  const [add, setAdd] = useState("add to cart");
+  
   if (!allProducts) {
     return <div>...loading</div>;
   }
   const item = allProducts.map((product) => {
+    // console.log({product});
     return (
       <Container>
         <Wrapper>
@@ -23,8 +21,22 @@ const AllProduct = () => {
           <SubContainer>
             <h2> {product.name}</h2>
             <p>{product.price}</p>
-            <p>we have {product.numInStock} items in stock</p>
-            <Button onClick={() => setAdd("added to your cart")}>{add}</Button>
+            <p>we have {product.numInStock}items in stock</p>
+            <Button onClick={() => {
+              addToCart({
+                _id: product._id,
+                name: product.name,
+                price: product.price,
+                stock: product.numInStock,
+                companyId: product.companyId,
+                body_location: product.body_location,
+                category: product.category,
+                img: product.imageSrc
+              }); 
+              setAdd("Added to your cart")
+              }}>
+                {add}
+              </Button>
           </SubContainer>
         </Wrapper>
       </Container>
