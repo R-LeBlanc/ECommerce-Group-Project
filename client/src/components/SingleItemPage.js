@@ -30,7 +30,7 @@ const SingleItemPage = () => {
       <Wrapper>
         <img src={items.imageSrc} />
         <SubContainer>
-          <p>{items.name}</p>
+          <h2>{items.name}</h2>
           <p>{items.price}</p>
           <p>we have {items.numInStock} in stock act fast!!</p>
           {/* <Button onClick={() => setAdd("added to your cart")}>{add}</Button> */}
@@ -58,7 +58,7 @@ const SingleItemPage = () => {
 const Button = styled.button`
   width: 200px;
   height: 30px;
-  background-color: #dbc6ad;
+  background-color: var(--color-secondary);
   cursor: pointer;
   border: none;
   border-radius: 10px;
@@ -68,7 +68,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
 `;
 const SubContainer = styled.div`
   display: block;

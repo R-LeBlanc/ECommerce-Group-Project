@@ -19,8 +19,9 @@ const AllProduct = () => {
         <Wrapper>
           <img src={product.imageSrc} />
           <SubContainer>
-            <p> {product.name}</p>
+            <h2> {product.name}</h2>
             <p>{product.price}</p>
+<<<<<<< HEAD
             <p>we have {product.numInStock}items in stock</p>
             <Button onClick={() => {
               addToCart({
@@ -37,6 +38,10 @@ const AllProduct = () => {
               }}>
                 {add}
               </Button>
+=======
+            <p>we have {product.numInStock} items in stock</p>
+            <Button onClick={() => setAdd("added to your cart")}>{add}</Button>
+>>>>>>> master
           </SubContainer>
         </Wrapper>
       </Container>
@@ -56,7 +61,7 @@ const Container = styled.div`
 const Button = styled.button`
   width: 200px;
   height: 30px;
-  background-color: #dbc6ad;
+  background-color: var(--color-secondary);
   cursor: pointer;
   border: none;
   border-radius: 10px;
@@ -68,8 +73,7 @@ const Wrapper = styled.div`
   display: space-between;
   column-gap: 50px;
   row-gap: 50px;
-
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
 `;
 const SubContainer = styled.div`
   display: block;
