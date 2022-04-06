@@ -11,7 +11,9 @@ const Header = () => {
           <Title>Reservoir Cats</Title>
         </Logo>
         <Products>
-          <AllProduct>All Products</AllProduct>
+          <Link to="/products">
+            <AllProduct>All Products</AllProduct>
+          </Link>
 
           <Categories>Categories</Categories>
         </Products>

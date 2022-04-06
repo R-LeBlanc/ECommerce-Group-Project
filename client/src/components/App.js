@@ -10,8 +10,8 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      <Header></Header>
       <Router>
+        <Header></Header>
         <Routes>
           <Route path="/products/:_id" element={<SingleItemPage />} />
           <Route path="/products" element={<AllProduct />} />
