@@ -4,6 +4,9 @@ require("dotenv").config();
 const { MongoClient } = require("mongodb");
 const { MONGO_URI } = process.env;
 
+// use this package to generate unique ids: https://www.npmjs.com/package/uuid
+const { v4: uuidv4 } = require("uuid");
+
 // This is the dotenv configuration for Ross,
 // Since his computer just ALWAYS has to be different!
 // const { MongoClient } = require("mongodb");
@@ -126,6 +129,10 @@ const getCompany = async (req, res) => {
 // (Not used yet, for strech goal)
 // Format of data undecided (working template)
 const postPurchases = async (req, res) => {
+  // Uses uuid to create randomly generated ids for the purchases
+  let id = uuidv4();
+  req.body["_id"] = id;
+
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
