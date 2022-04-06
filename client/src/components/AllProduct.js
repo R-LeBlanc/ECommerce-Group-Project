@@ -1,23 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
+
 import { Link } from "react-router-dom";
-import SingleItemPage from "./SingleItemPage";
-// this page will show all products from the database
-const AllProduct = ({ _id }) => {
-  const [allProducts, setAllProducts] = useState(null);
 
+import { ProductsContext } from "./ProductContext";
+import { CartContext } from "./CartContext";
+
+const AllProduct = () => {
+  const { allProducts } = React.useContext(ProductsContext);
+  const { cartState, addToCart } = useContext(CartContext);
+  console.log({ cartState });
   const [add, setAdd] = useState("add to cart");
-  //fetch to the database to display all items
-  useEffect(() => {
-    const allItems = async () => {
-      const response = await fetch(`/products`);
-      const data = await response.json();
 
-      setAllProducts(data.data);
-    };
-    allItems();
-  }, []);
-  //loading
   if (!allProducts) {
     return <div>...loading</div>;
   }
@@ -26,6 +20,7 @@ const AllProduct = ({ _id }) => {
   }
   // map to display all products
   const item = allProducts.map((product) => {
+    // console.log({product});
     return (
       <Wrapper>
         <Test>
@@ -35,6 +30,7 @@ const AllProduct = ({ _id }) => {
           <SubContainer>
             <h2> {product.name}</h2>
             <p>{product.price}</p>
+
             <p>
               {product.numInStock ? (
                 <span>in Stock</span>
@@ -42,13 +38,26 @@ const AllProduct = ({ _id }) => {
                 <span>out of stock</span>
               )}
             </p>
+
+            <Button
+              onClick={() => {
+                addToCart({
+                  _id: product._id,
+                  name: product.name,
+                  price: product.price,
+                  stock: product.numInStock,
+                  companyId: product.companyId,
+                  body_location: product.body_location,
+                  category: product.category,
+                  img: product.imageSrc,
+                });
+                setAdd("Added to your cart");
+              }}
+            >
+              {add}
+            </Button>
           </SubContainer>
         </Test>
-        <div>
-          {product.numInStock ? (
-            <Button onClick={() => setAdd("added to your cart")}>{add}</Button>
-          ) : undefined}
-        </div>
       </Wrapper>
     );
   });
