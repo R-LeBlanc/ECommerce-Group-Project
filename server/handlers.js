@@ -148,6 +148,23 @@ const postPurchases = async (req, res) => {
   client.close();
 };
 
+// Will GET all the puchases from the Purchases collection
+const getPurchases = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+  await client.connect();
+  const db = client.db("ReservoirCats");
+
+  db.collection("Purchases")
+    .find({})
+    .toArray(function (err, result) {
+      if (err) {
+        res.status(500).json({ status: 500, message: err.message });
+      }
+      res.status(200).json({ status: 200, data: result });
+      client.close();
+    });
+};
+
 module.exports = {
   getProducts,
   getProductById,
@@ -155,4 +172,5 @@ module.exports = {
   getCompanies,
   getCompany,
   postPurchases,
+  getPurchases,
 };
