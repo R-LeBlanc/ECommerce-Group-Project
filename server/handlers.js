@@ -61,25 +61,54 @@ const getProductById = async (req, res) => {
 const updateStock = async (req, res) => {
   // The id from the endpoint is a string so it needs to be parsed to an integer
   // inorder to be found in the database!!!
-  const _id = parseInt(req.params._id);
-  const query = { _id };
-  const newValues = {
-    $set: {
-      numInStock: req.body.numInStock,
-    },
-  };
+  // const _id = parseInt(req.body._id);
 
+  // const query = { _id };
+
+  // const newValues = {
+  // will decrease the numInStock field by the amount of the product
+  // that the user selects
+  //   $inc: {
+  //     numInStock: -req.body.amount,
+  //   },
+  // };
+
+  // const newValues = {
+  //   $set: {
+  //     numInStock: req.body.numInStock,
+  //   },
+  // };
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
     const db = client.db("ReservoirCats");
-    const newStock = await db
-      .collection("Products")
-      .updateOne(query, newValues);
+    // will loop through the array of objects and update the stock of each
+    // item by the amount specified
+    for (let i of req.body) {
+      let _id = parseInt(i._id);
+      const query = { _id };
 
+      const newValues = {
+        // will decrease the numInStock field by the amount of the product
+        // that the user selects
+        $inc: {
+          numInStock: -i.amount,
+        },
+      };
+      await db.collection("Products").updateOne(query, newValues);
+    }
+
+    // const newStock = await db
+    // .collection("Products")
+    // .updateOne(query, newValues);
+    // if (newStock.modifiedCount === 0) {
+    //   res
+    //     .status(400)
+    //     .json({ status: 500, data: newStock, message: "No match found" });
+    // }
     res.status(201).json({
       status: 201,
-      data: newStock,
+      // data: newStock,
       message: "Stock has been updated",
     });
   } catch (err) {
