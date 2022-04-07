@@ -45,6 +45,7 @@ const SingleItemPage = () => {
                 img: items.imageSrc
               }); 
               setAdd("Added to your cart");
+              console.log({cartState});
               }}>
                 {add}
               </Button>
