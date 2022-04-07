@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Routes, Route } from "react-router";
 import AllProduct from "./AllProduct";
 import GlobalStyles from "./GlobalStyles";
+import HomePage from "./HomePage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Router>
         <Header></Header>
         <Routes>
+          <Route path="/" exact element={<HomePage />} />
           <Route path="/products/:_id" element={<SingleItemPage />} />
           <Route path="/products" element={<AllProduct />} />
         </Routes>
