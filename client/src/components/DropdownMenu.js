@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { keyframes } from "styled-components";
 
 const DropdownMenu = () => {
   return (
@@ -29,15 +30,22 @@ const DropdownMenu = () => {
 
 export default DropdownMenu;
 
+const dropdownAnimation = keyframes`
+0% {height: 0; opacity: 0;}
+100% {height: 30vh; opacity: 1;}
+`;
+
 const Wrapper = styled.div`
   background-color: var(--color-primary);
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 15px 16px -15px rgba(0, 0, 0, 1);
   display: flex;
   left: 0;
   position: absolute;
   top: 60px;
   width: 100%;
   z-index: 5;
+  animation-name: ${dropdownAnimation};
+  animation-duration: 2s;
 `;
 
 const LifeStyle = styled.div`
