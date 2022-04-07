@@ -39,7 +39,7 @@ express()
   // returns a product based on the id
   .get("/products/:_id", getProductById)
   // will update the stock of the product base on id
-  .patch(`/products/:_id`, updateStock)
+  .patch(`/products`, updateStock)
   // returns all the companies
   .get("/companies", getCompanies)
   // returns a company by company ID
