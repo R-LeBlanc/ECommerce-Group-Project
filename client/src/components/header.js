@@ -19,7 +19,9 @@ const Header = () => {
         </Products>
         <SubContainer>
           <Signin>Sign in</Signin>
-          <Cart>Cart</Cart>
+          <Link to="/cart">
+            <Cart>Cart</Cart>
+          </Link>
         </SubContainer>
       </Wrapper>
     </>

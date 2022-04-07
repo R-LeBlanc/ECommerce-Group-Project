@@ -4,6 +4,7 @@ import SingleItemPage from "./SingleItemPage";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Routes, Route } from "react-router";
 import AllProduct from "./AllProduct";
+import Cart from "./Cart";
 import GlobalStyles from "./GlobalStyles";
 import HomePage from "./HomePage";
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" exact element={<HomePage />} />
           <Route path="/products/:_id" element={<SingleItemPage />} />
           <Route path="/products" element={<AllProduct />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </Router>
     </>
