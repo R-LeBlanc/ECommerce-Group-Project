@@ -7,6 +7,7 @@ import AllProduct from "./AllProduct";
 import Cart from "./Cart";
 import GlobalStyles from "./GlobalStyles";
 import HomePage from "./HomePage";
+import ConfirmationPage from "./ConfirmationPage";
 function App() {
   return (
     <>
@@ -18,6 +19,7 @@ function App() {
           <Route path="/products/:_id" element={<SingleItemPage />} />
           <Route path="/products" element={<AllProduct />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/confirmation" element={<ConfirmationPage />} />
         </Routes>
       </Router>
     </>
