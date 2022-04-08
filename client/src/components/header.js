@@ -18,7 +18,7 @@ const Header = () => {
     <>
       <Wrapper onMouseLeave={handleMouseLeave}>
         <Logo>
-          <Img src="../garfield.png" />
+          <Img src="../5.png" />
           <Title>Reservoir Cats</Title>
         </Logo>
         <Products>
@@ -63,7 +63,7 @@ const Products = styled.span`
 `;
 const Img = styled.img`
   height: 50px;
-  width: 40px;
+  width: 50px;
 `;
 
 const Wrapper = styled.div`
