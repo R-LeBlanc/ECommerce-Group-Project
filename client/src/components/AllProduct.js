@@ -46,6 +46,7 @@ const AllProduct = () => {
                   name: product.name,
                   price: product.price,
                   stock: product.numInStock,
+                  quantityInCart: 1,
                   companyId: product.companyId,
                   body_location: product.body_location,
                   category: product.category,
