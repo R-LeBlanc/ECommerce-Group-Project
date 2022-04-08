@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 import { ProductsContext } from "./ProductContext";
 import { CartContext } from "./CartContext";
+import FilterBar from "./FilterBar";
 
 const AllProduct = () => {
   const { allProducts } = React.useContext(ProductsContext);
@@ -63,6 +64,7 @@ const AllProduct = () => {
   });
   return (
     <>
+      <FilterBar />
       <ItemWrapper>{item}</ItemWrapper>
     </>
   );
@@ -76,6 +78,7 @@ const ItemWrapper = styled.div`
   flex-wrap: wrap;
   margin-left: 20px;
   margin-right: 20px;
+  justify-content: center;
   align-items: baseline;
 `;
 
