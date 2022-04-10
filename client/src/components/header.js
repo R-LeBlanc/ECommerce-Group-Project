@@ -1,21 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import DropdownMenu from "./DropdownMenu";
 // the header should be shown at each page
 const Header = () => {
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
     <>
-      <Wrapper>
+      <Wrapper onMouseLeave={handleMouseLeave}>
         <Logo>
-          <Img src="../garfield.png" />
+          <Img src="../5.png" />
           <Title>Reservoir Cats</Title>
         </Logo>
         <Products>
           <Link to="/products">
             <AllProduct>All Products</AllProduct>
           </Link>
-
-          <Categories>Categories</Categories>
+          <Categories onMouseEnter={handleMouseEnter}>Categories</Categories>
+          {isHovered && <DropdownMenu />}
         </Products>
         <SubContainer>
           <Signin>Sign in</Signin>
@@ -52,7 +63,7 @@ const Products = styled.span`
 `;
 const Img = styled.img`
   height: 50px;
-  width: 40px;
+  width: 50px;
 `;
 
 const Wrapper = styled.div`
