@@ -18,8 +18,6 @@ const batchImport = async () => {
     const db = item.db("ReservoirCats");
 
     await db.collection("Products").insertMany(items);
-
-    console.log(items);
   } catch (err) {
     console.log(err);
   }

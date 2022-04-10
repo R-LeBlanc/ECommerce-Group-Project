@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "./ProductContext";
 import { CartContext } from "./CartContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -45,6 +45,25 @@ const Cart = () => {
       creditCard: creditCard,
       ccv: ccv,
     };
+
+    const update = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data.items),
+    };
+    const updateStock = async () => {
+      console.log("here");
+      try {
+        const response = await fetch("/products", update);
+        const updated = await response.json();
+        console.log("hello", updated);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    updateStock();
 
     const settings = {
       method: "POST",

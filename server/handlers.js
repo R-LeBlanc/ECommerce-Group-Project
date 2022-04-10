@@ -61,23 +61,10 @@ const getProductById = async (req, res) => {
 const updateStock = async (req, res) => {
   // The id from the endpoint is a string so it needs to be parsed to an integer
   // inorder to be found in the database!!!
-  // const _id = parseInt(req.body._id);
 
-  // const query = { _id };
-
-  // const newValues = {
   // will decrease the numInStock field by the amount of the product
   // that the user selects
-  //   $inc: {
-  //     numInStock: -req.body.amount,
-  //   },
-  // };
 
-  // const newValues = {
-  //   $set: {
-  //     numInStock: req.body.numInStock,
-  //   },
-  // };
   const client = new MongoClient(MONGO_URI, options);
   try {
     await client.connect();
@@ -92,7 +79,7 @@ const updateStock = async (req, res) => {
         // will decrease the numInStock field by the amount of the product
         // that the user selects
         $inc: {
-          numInStock: -i.amount,
+          numInStock: -i.quantityInCart,
         },
       };
       await db.collection("Products").updateOne(query, newValues);
@@ -168,6 +155,7 @@ const postPurchases = async (req, res) => {
     const db = client.db("ReservoirCats");
 
     await db.collection("Purchases").insertOne(req.body);
+
     res
       .status(201)
       .json({ status: 201, data: req.body, message: "Purchase created" });
