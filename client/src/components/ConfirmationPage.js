@@ -6,7 +6,7 @@ import { CartContext } from "./CartContext";
 // after you make a purchase you will be automatically redirected to this page
 const ConfirmationPage = () => {
   const { cartState, info } = useContext(CartContext);
-  console.log(info);
+
   return (
     <>
       <Container>
