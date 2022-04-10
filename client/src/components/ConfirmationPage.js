@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { CartContext } from "./CartContext";
 
 // after you make a purchase you will be automatically redirected to this page
 const ConfirmationPage = () => {
+  const { cartState, info } = useContext(CartContext);
+  console.log(info);
   return (
     <>
       <Container>
@@ -13,18 +16,32 @@ const ConfirmationPage = () => {
             <Title>Thank you for your purchase </Title>
             <Info>
               <Bold>Confirmation number: </Bold>
+              {info._id}
             </Info>
             <Info>
               <Bold> Items purchased: </Bold>
             </Info>
+            {/* we are doing a map here so that if the user buys more than one item it will show all of them */}
+            {cartState.items.map((item) => {
+              return (
+                <>
+                  <ItemContainer key={item._id}>
+                    <span style={{ color: "black" }}>{item.name}</span>
+                  </ItemContainer>
+                </>
+              );
+            })}
             <Info>
               <Bold>Name: </Bold>
+              {info.firstName} {info.lastName}
             </Info>
             <Info>
               <Bold>Address </Bold>
+              {info.address}
             </Info>
             <Info>
               <Bold>A confirmation email was sent to:</Bold>
+              {info.email}
             </Info>
           </Wrapper>
         </SubContainer>
@@ -38,6 +55,10 @@ const ConfirmationPage = () => {
     </>
   );
 };
+const ItemContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
 const BtnContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -74,9 +95,10 @@ const Img = styled.img`
   height: 150px;
   width: 150px;
 `;
-const Info = styled.div`
+const Info = styled.span`
   display: flex;
   margin-top: 30px;
+  color: black;
 `;
 const SubContainer = styled.div`
   display: flex;
