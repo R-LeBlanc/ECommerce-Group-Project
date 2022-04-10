@@ -36,8 +36,9 @@ function cartReducer(cartState, action) {
 
 
 export const CartProvider = ({children}) => {
-
+    // this is the state which keeps track of the cart
     const [cartState, cartDispatch] = useReducer(cartReducer, initialCartState);
+    // used to trigger re-render in cart after modifying it
     const [forceRerender, setForceRerender] = useState(false);
     // triggers useEffect in ProductProvider
     const [flipState, setFlipState] = useState(false);
@@ -59,7 +60,6 @@ export const CartProvider = ({children}) => {
         }
 
         if (arrayOfDuplicate.length > 0){
-
             newCartState.items.forEach((el) => {
                 if (el._id === arrayOfDuplicate[0]){
                     targetItem = el;
@@ -68,7 +68,6 @@ export const CartProvider = ({children}) => {
             })
 
             newCartState.items.splice(targetItemPosition, 1);
-
             newCartState.items.splice(targetItemPosition, 0, targetItem);
 
             cartDispatch({type:"INCREASE-QUANTITY", payload: newCartState});
@@ -85,14 +84,11 @@ export const CartProvider = ({children}) => {
         let targetItem;
         let targetItemPosition;
 
-        console.log({newCartState});
-
         for (let i=0; i<newCartState.items.length; i++){
             if (newCartState.items[i]._id === val._id){
                 targetItemPosition = i;
             }
         }
-        console.log({targetItemPosition});
 
         if (newCartState.items[targetItemPosition].quantityInCart <= 1){
             newCartState.items.splice(targetItemPosition, 1);
@@ -107,15 +103,8 @@ export const CartProvider = ({children}) => {
                 }
             })
 
-            console.log({targetItem})
-
             newCartState.items.splice(targetItemPosition, 1);
-
-            console.log("newCartState after removal: ", newCartState);
-
             newCartState.items.splice(targetItemPosition, 0, targetItem);
-
-            console.log("newCartState after adding targetItem: ", newCartState);
 
             cartDispatch({type: "DECREASE-QUANTITY", payload: newCartState});
             setForceRerender(!forceRerender);
