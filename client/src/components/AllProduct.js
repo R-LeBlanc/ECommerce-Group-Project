@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 
 import { Link } from "react-router-dom";
@@ -8,10 +8,49 @@ import { CartContext } from "./CartContext";
 import FilterBar from "./FilterBar";
 
 const AllProduct = () => {
-  const { allProducts } = React.useContext(ProductsContext);
+  const { allProducts, setAllProducts } = React.useContext(ProductsContext);
   const { cartState, addToCart } = useContext(CartContext);
   console.log({ cartState });
   const [add, setAdd] = useState("add to cart");
+  const [filters, setFilters] = useState({
+    brand: null,
+    location: null,
+    sortBy: null,
+  });
+
+  const sortByAsc = () => {
+    allProducts.sort((a, b) => {
+      if (a.price > b.price) {
+        return -1;
+      }
+      if (a.price < b.price) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+
+  const sortByDec = () => {
+    allProducts.sort((a, b) => {
+      if (a.price > b.price) {
+        return 0;
+      }
+      if (a.price < b.price) {
+        return 1;
+      }
+      return -1;
+    });
+  };
+
+  useEffect(() => {
+    if (filters.brand) {
+      setAllProducts(
+        allProducts.filter((product) => product.companyId === filters.brand)
+      );
+    }
+  }, [filters]);
+
+  console.log(allProducts.length);
 
   if (!allProducts) {
     return <div>...loading</div>;
@@ -64,7 +103,8 @@ const AllProduct = () => {
   });
   return (
     <>
-      <FilterBar />
+      <FilterBar filters={filters} setFilters={setFilters} />
+      {allProducts.length === 0 && <h2>No products Found</h2>}
       <ItemWrapper>{item}</ItemWrapper>
     </>
   );

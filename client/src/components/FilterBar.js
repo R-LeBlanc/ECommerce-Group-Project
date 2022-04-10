@@ -1,14 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import { keyframes } from "styled-components";
 
 import { ProductsContext } from "./ProductContext";
 
-const FilterBar = () => {
+const FilterBar = ({ filters, setFilters }) => {
   const { allProducts } = React.useContext(ProductsContext);
   const [company, setCompany] = React.useState(false);
   const [location, setLocation] = React.useState(false);
   const [sort, setSort] = React.useState(false);
-
+  console.log(filters);
   //   Creates an array of of all the body_locations in the allProducts array
   const bodyLocation = allProducts.map((product) => {
     return product.body_location;
@@ -16,8 +17,6 @@ const FilterBar = () => {
   // Creates a new Set with the bodyLocation array
   // so that we get an array with unique items
   const uniqueLocations = [...new Set(bodyLocation)];
-
-  //   console.log(uniqueLocations);
 
   const handleCompanyHover = () => {
     if (company) {
@@ -43,26 +42,42 @@ const FilterBar = () => {
     }
   };
 
+  const callUniqueBrands = [
+    { name: "Belikin", _id: 16384 },
+    { name: "Garmin", _id: 10713 },
+  ];
+
   return (
     <>
       <Wrapper>
         <Title>Shop</Title>
         <FilterWrap>
           <CompanyWrap onMouseLeave={handleCompanyHover}>
-            <Company onMouseEnter={handleCompanyHover}>Company</Company>
+            <Company onMouseEnter={handleCompanyHover}>
+              Company
+              {company && <Shape />}
+            </Company>
             {/* if the Company div is hovered over, the dropdown menu will show */}
             {company && (
               <CompanyDropdown>
-                <Item>Belkin</Item>
-                <Item>Garmin</Item>
-                <Item>Lifetrak</Item>
-                <Item>Mio</Item>
+                {callUniqueBrands.map((brand) => {
+                  return (
+                    <Item
+                      key={brand._id}
+                      onClick={() =>
+                        setFilters({ ...filters, brand: brand._id })
+                      }
+                    >
+                      {brand.name}
+                    </Item>
+                  );
+                })}
               </CompanyDropdown>
             )}
           </CompanyWrap>
           <LocationWrap onMouseLeave={handleLocationHover}>
             <BodyLocation onMouseEnter={handleLocationHover}>
-              Body Location
+              Body Location {location && <Shape />}
             </BodyLocation>
             {/* if the BodyLocation div is hovered over, the dropdown menu will show */}
             {location && (
@@ -74,7 +89,7 @@ const FilterBar = () => {
             )}
           </LocationWrap>
           <SortWrap onMouseLeave={handleSortHover}>
-            <Sort onMouseEnter={handleSortHover}>Sort</Sort>
+            <Sort onMouseEnter={handleSortHover}>Sort {sort && <Shape />}</Sort>
             {/* if the Sort div is hovered over, the dropdown menu will show */}
             {sort && (
               <SortDropdown>
@@ -90,6 +105,30 @@ const FilterBar = () => {
 };
 
 export default FilterBar;
+
+const dropdownAnimation = keyframes`
+/* 0% {height: 0; opacity: 0;}
+100% {height: 20vh; opacity: 1;} */
+0% {
+    transform: rotateX(-90deg);
+}
+70% {
+transform: rotateX(20deg)
+}
+100% {
+transform: rotateX(0deg)
+}
+`;
+
+const arrowSpin = keyframes`
+0% {
+    transform: rotateZ(-180deg);
+}
+100% {
+    transform: rotateZ(0deg);
+}
+
+`;
 
 const Wrapper = styled.div`
   box-shadow: 0 10px 5px -5px lightgrey;
@@ -118,14 +157,25 @@ const Company = styled.div`
   border-bottom: 3px solid var(--color-primary);
   border-radius: 10px;
   cursor: pointer;
+  display: flex;
   font-size: 1.5rem;
+  justify-content: center;
   padding: 10px 0;
-  text-align: center;
   width: 25vw;
 
   &:hover {
     background-color: lightgrey;
   }
+`;
+
+const Shape = styled.div`
+  background-color: black;
+  clip-path: polygon(50% 46%, 0 0, 100% 0);
+  height: 10px;
+  margin: 10px 0 0 15px;
+  width: 10px;
+
+  animation: ${arrowSpin} 500ms ease-in-out;
 `;
 
 const CompanyWrap = styled.div``;
@@ -136,6 +186,9 @@ const CompanyDropdown = styled.div`
   border-radius: 10px;
   position: absolute;
   width: 25vw;
+
+  animation: ${dropdownAnimation} 800ms ease-in-out forwards;
+  transform-origin: top center;
 `;
 
 const Item = styled.div`
@@ -155,7 +208,9 @@ const BodyLocation = styled.div`
   border-bottom: 3px solid var(--color-primary);
   border-radius: 10px;
   cursor: pointer;
+  display: flex;
   font-size: 1.5rem;
+  justify-content: center;
   padding: 10px 0;
   text-align: center;
   width: 25vw;
@@ -171,6 +226,9 @@ const LocationDropdown = styled.div`
   border-radius: 10px;
   position: absolute;
   width: 25vw;
+
+  animation: ${dropdownAnimation} 800ms ease-in-out forwards;
+  transform-origin: top center;
 `;
 
 const SortWrap = styled.div``;
@@ -179,7 +237,9 @@ const Sort = styled.div`
   border-bottom: 3px solid var(--color-primary);
   border-radius: 10px;
   cursor: pointer;
+  display: flex;
   font-size: 1.5rem;
+  justify-content: center;
   padding: 10px 0;
   text-align: center;
   width: 25vw;
@@ -195,4 +255,7 @@ const SortDropdown = styled.div`
   border-radius: 10px;
   position: absolute;
   width: 25vw;
+
+  animation: ${dropdownAnimation} 800ms ease-in-out forwards;
+  transform-origin: top center;
 `;
