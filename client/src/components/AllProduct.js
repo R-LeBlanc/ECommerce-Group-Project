@@ -43,6 +43,9 @@ const AllProduct = () => {
   };
 
   useEffect(() => {
+    // This will filter through the allProducts array and return the products
+    // that match with the filter brand.
+    // Is called every time the filter updates
     if (filters.brand) {
       setAllProducts(
         allProducts.filter((product) => product.companyId === filters.brand)
@@ -50,7 +53,7 @@ const AllProduct = () => {
     }
   }, [filters]);
 
-  console.log(allProducts.length);
+  console.log(filters);
 
   if (!allProducts) {
     return <div>...loading</div>;
@@ -104,7 +107,12 @@ const AllProduct = () => {
   return (
     <>
       <FilterBar filters={filters} setFilters={setFilters} />
-      {allProducts.length === 0 && <h2>No products Found</h2>}
+      {allProducts.length === 0 && (
+        <>
+          <h2>No Products Found</h2>{" "}
+          <p>Please press the clear button and try again</p>{" "}
+        </>
+      )}
       <ItemWrapper>{item}</ItemWrapper>
     </>
   );

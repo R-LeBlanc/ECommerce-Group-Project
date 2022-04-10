@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
 
@@ -9,6 +9,7 @@ const FilterBar = ({ filters, setFilters }) => {
   const [company, setCompany] = React.useState(false);
   const [location, setLocation] = React.useState(false);
   const [sort, setSort] = React.useState(false);
+  const [companies, setCompanies] = useState(null);
   console.log(filters);
   //   Creates an array of of all the body_locations in the allProducts array
   const bodyLocation = allProducts.map((product) => {
@@ -17,6 +18,16 @@ const FilterBar = ({ filters, setFilters }) => {
   // Creates a new Set with the bodyLocation array
   // so that we get an array with unique items
   const uniqueLocations = [...new Set(bodyLocation)];
+
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      const response = await fetch("/companies");
+      const data = await response.json();
+      setCompanies(data.data);
+      //   console.log(data.data);
+    };
+    fetchCompanies().catch(console.error);
+  }, []);
 
   const handleCompanyHover = () => {
     if (company) {
@@ -60,7 +71,7 @@ const FilterBar = ({ filters, setFilters }) => {
             {/* if the Company div is hovered over, the dropdown menu will show */}
             {company && (
               <CompanyDropdown>
-                {callUniqueBrands.map((brand) => {
+                {companies.map((brand) => {
                   return (
                     <Item
                       key={brand._id}
