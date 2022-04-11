@@ -7,7 +7,6 @@ import styled from 'styled-components';
 const Cart = () => {
     const { allProducts } = React.useContext(ProductsContext);
     const { 
-        forceRerender,
         cartState,
         addToCart,
         removeFromCart, 
@@ -22,7 +21,7 @@ const Cart = () => {
             }
         }
     }
-    if (!forceRerender || cartState.items.length > 0){
+    if (cartState.items.length > 0){
     return (
         <>
         <Wrapper>
