@@ -24,13 +24,25 @@ function cartReducer(cartState, action) {
                 items: [...cartState.items, action.payload],
             };
         case "INCREASE-QUANTITY":
-            return action.payload;
+            return { 
+                ...cartState, 
+                items: action.payload,
+            };
         case "DECREASE-QUANTITY":
-            return action.payload;
+            return { 
+                ...cartState, 
+                items: action.payload,
+            };
         case "REMOVE-FROM-CART":
-            return action.payload;
+            return { 
+                ...cartState, 
+                items: action.payload,
+            };
         case "RESET-CART":
-            return initialCartState;
+            return { 
+                ...cartState, 
+                items: initialCartState.items,
+            };
         default:
             console.log("Error");
             return cartState;
@@ -62,20 +74,19 @@ export const CartProvider = ({children}) => {
 
     useEffect(() => {
         pushCartToLocalStorage(cartState);
-    }, [flipState])
+    }, [cartState])
 
     // calling this function pushes cartState to localStorage
     function pushCartToLocalStorage(shoppingCart){
         window.localStorage.setItem("cart-state", JSON.stringify(shoppingCart));
     }
-
+    // calling this function removes cartState from localStorage
     function removeCartFromLocalStorage(){
         window.localStorage.removeItem("cart-state")
     }
 
     // the following functions manipulate cartState by calling dispatch
     // they also ensure that cartState is updated synchronously
-
     function addToCart(val){
         let arrayOfDuplicate = [];
         let newCartState = cartState;
@@ -96,24 +107,14 @@ export const CartProvider = ({children}) => {
                     targetItem.quantityInCart += 1;
                 }
             })
-
             newCartState.items.splice(targetItemPosition, 1);
             newCartState.items.splice(targetItemPosition, 0, targetItem);
-
-            cartDispatch({type:"INCREASE-QUANTITY", payload: newCartState});
-            // setForceRerender(!forceRerender);
-            // pushCartToLocalStorage(cartState);
-
+            cartDispatch({type:"INCREASE-QUANTITY", payload: newCartState.items});
         }
         else{
             cartDispatch({type: "ADD-TO-CART", payload: val});
-            // pushCartToLocalStorage(cartState);
-            // setForceRerender(!forceRerender);
             console.log("after add: ", cartState);
         }
-        setForceRerender(!forceRerender);
-        setFlipState(!flipState);
-        // pushCartToLocalStorage(cartState);
     }
 
     function removeFromCart(val){
@@ -129,9 +130,7 @@ export const CartProvider = ({children}) => {
 
         if (newCartState.items[targetItemPosition].quantityInCart <= 1){
             newCartState.items.splice(targetItemPosition, 1);
-            cartDispatch({type: "REMOVE-FROM-CART", payload: newCartState});
-            setForceRerender(!forceRerender);
-            // pushCartToLocalStorage(cartState);
+            cartDispatch({type: "REMOVE-FROM-CART", payload: newCartState.items});
         }
         else{
             newCartState.items.forEach((el) => {
@@ -140,28 +139,20 @@ export const CartProvider = ({children}) => {
                     targetItem.quantityInCart -= 1;
                 }
             })
-
             newCartState.items.splice(targetItemPosition, 1);
             newCartState.items.splice(targetItemPosition, 0, targetItem);
-
-            cartDispatch({type: "DECREASE-QUANTITY", payload: newCartState});
-            setForceRerender(!forceRerender);
-            // pushCartToLocalStorage(cartState);
+            cartDispatch({type: "DECREASE-QUANTITY", payload: newCartState.items});
         }
-        setFlipState(!flipState);
     }
 
     function resetCart(){
         cartDispatch({type: "RESET-CART"});
         removeCartFromLocalStorage();
-        setForceRerender(!forceRerender);
     }
 
     return (
         <CartContext.Provider
         value={{
-            forceRerender,
-            cartState, 
             addToCart,
             removeFromCart,
             resetCart,
