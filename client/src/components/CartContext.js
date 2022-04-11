@@ -1,7 +1,6 @@
 // THIS CONTEXT HANDLES SHOPPING CART-RELATED STATE AND EVENTS
 
-import React, {createContext, useState, useReducer} from "react";
-
+import React, {createContext, useState, useReducer, useEffect} from "react";
 
 export const CartContext = createContext(null);
 
@@ -13,8 +12,12 @@ const initialCartState = {
 // this reducer function will govern changes to the cart's state
 function cartReducer(cartState, action) {
     switch (action.type) {
-        // this case will require more logic 
-        // (ex: only add item if item not in items array, etc)
+        case "LOAD-CART-FROM-LOCAL-STORAGE":
+            return {
+                ...cartState,
+                user: action.userPayload,
+                items: action.itemsPayload,
+            }
         case "ADD-TO-CART":
             return { 
                 ...cartState, 
@@ -34,7 +37,6 @@ function cartReducer(cartState, action) {
     }
 }
 
-
 export const CartProvider = ({children}) => {
     // this is the state which keeps track of the cart
     const [cartState, cartDispatch] = useReducer(cartReducer, initialCartState);
@@ -42,6 +44,34 @@ export const CartProvider = ({children}) => {
     const [forceRerender, setForceRerender] = useState(false);
     // triggers useEffect in ProductProvider
     const [flipState, setFlipState] = useState(false);
+
+    // update cartState's initial state based on local storage
+    useEffect(() => {
+          // checks local storage for cartState 
+        let retrievedCart = JSON.parse(window.localStorage.getItem("cart-state"));
+
+        if (retrievedCart) {
+            cartDispatch({
+                type:"LOAD-CART-FROM-LOCAL-STORAGE", 
+                userPayload: retrievedCart.user,
+                itemsPayload: retrievedCart.items,
+            });
+        }
+        console.log({retrievedCart});
+    }, []);
+
+    useEffect(() => {
+        pushCartToLocalStorage(cartState);
+    }, [flipState])
+
+    // calling this function pushes cartState to localStorage
+    function pushCartToLocalStorage(shoppingCart){
+        window.localStorage.setItem("cart-state", JSON.stringify(shoppingCart));
+    }
+
+    function removeCartFromLocalStorage(){
+        window.localStorage.removeItem("cart-state")
+    }
 
     // the following functions manipulate cartState by calling dispatch
     // they also ensure that cartState is updated synchronously
@@ -71,12 +101,19 @@ export const CartProvider = ({children}) => {
             newCartState.items.splice(targetItemPosition, 0, targetItem);
 
             cartDispatch({type:"INCREASE-QUANTITY", payload: newCartState});
-            setForceRerender(!forceRerender);
+            // setForceRerender(!forceRerender);
+            // pushCartToLocalStorage(cartState);
+
         }
         else{
             cartDispatch({type: "ADD-TO-CART", payload: val});
-            setForceRerender(!forceRerender);
+            // pushCartToLocalStorage(cartState);
+            // setForceRerender(!forceRerender);
+            console.log("after add: ", cartState);
         }
+        setForceRerender(!forceRerender);
+        setFlipState(!flipState);
+        // pushCartToLocalStorage(cartState);
     }
 
     function removeFromCart(val){
@@ -94,6 +131,7 @@ export const CartProvider = ({children}) => {
             newCartState.items.splice(targetItemPosition, 1);
             cartDispatch({type: "REMOVE-FROM-CART", payload: newCartState});
             setForceRerender(!forceRerender);
+            // pushCartToLocalStorage(cartState);
         }
         else{
             newCartState.items.forEach((el) => {
@@ -108,14 +146,16 @@ export const CartProvider = ({children}) => {
 
             cartDispatch({type: "DECREASE-QUANTITY", payload: newCartState});
             setForceRerender(!forceRerender);
+            // pushCartToLocalStorage(cartState);
         }
+        setFlipState(!flipState);
     }
 
     function resetCart(){
         cartDispatch({type: "RESET-CART"});
+        removeCartFromLocalStorage();
         setForceRerender(!forceRerender);
     }
-
 
     return (
         <CartContext.Provider

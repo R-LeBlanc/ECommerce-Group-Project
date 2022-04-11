@@ -9,7 +9,7 @@ import { CartContext } from "./CartContext";
 const AllProduct = () => {
   const { allProducts } = React.useContext(ProductsContext);
   const { cartState, addToCart } = useContext(CartContext);
-  console.log({ cartState });
+  // console.log({ cartState });
   const [add, setAdd] = useState("add to cart");
 
   if (!allProducts) {

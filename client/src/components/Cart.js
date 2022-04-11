@@ -22,7 +22,7 @@ const Cart = () => {
             }
         }
     }
-    if (cartState.items.length > 0){
+    if (!forceRerender || cartState.items.length > 0){
     return (
         <>
         <Wrapper>
