@@ -5,8 +5,8 @@ import React, {createContext, useState, useReducer, useEffect} from "react";
 export const CartContext = createContext(null);
 
 const initialCartState = {
-    user: null,
-    items: [],
+  user: null,
+  items: [],
 };
 
 // this reducer function will govern changes to the cart's state
@@ -98,7 +98,10 @@ export const CartProvider = ({children}) => {
                 arrayOfDuplicate.push(newCartState.items[i]._id);
                 targetItemPosition = i;
             }
+
         }
+      });
+
 
         if (arrayOfDuplicate.length > 0){
             newCartState.items.forEach((el) => {
@@ -116,8 +119,9 @@ export const CartProvider = ({children}) => {
             console.log("after add: ", cartState);
         }
     }
+  }
 
-    function removeFromCart(val){
+  function removeFromCart(val){
         let newCartState = cartState;
         let targetItem;
         let targetItemPosition;
@@ -152,11 +156,15 @@ export const CartProvider = ({children}) => {
 
     return (
         <CartContext.Provider
-        value={{
-            addToCart,
-            removeFromCart,
-            resetCart,
-        }}
+       value={{
+        forceRerender,
+        cartState,
+        addToCart,
+        removeFromCart,
+        resetCart,
+        info,
+        setInfo,
+      }}
         >
             {children}
         </CartContext.Provider>
