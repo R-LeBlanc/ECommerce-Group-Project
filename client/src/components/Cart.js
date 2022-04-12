@@ -6,6 +6,7 @@ import styled from "styled-components";
 import ConfirmationPage from "./ConfirmationPage";
 
 const Cart = () => {
+
   let navigate = useNavigate();
   const [creditCard, setCreditCard] = useState(null);
   const [ccv, setCcv] = useState(null);
@@ -16,7 +17,6 @@ const Cart = () => {
   const [_id, set_id] = useState(null);
   const { allProducts } = React.useContext(ProductsContext);
   const {
-    forceRerender,
     cartState,
     addToCart,
     removeFromCart,
