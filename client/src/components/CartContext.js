@@ -5,8 +5,8 @@ import React, {createContext, useState, useReducer, useEffect} from "react";
 export const CartContext = createContext(null);
 
 const initialCartState = {
-  user: null,
-  items: [],
+    user: null,
+    items: [],
 };
 
 // this reducer function will govern changes to the cart's state
@@ -52,10 +52,7 @@ function cartReducer(cartState, action) {
 export const CartProvider = ({children}) => {
     // this is the state which keeps track of the cart
     const [cartState, cartDispatch] = useReducer(cartReducer, initialCartState);
-    // used to trigger re-render in cart after modifying it
-    const [forceRerender, setForceRerender] = useState(false);
-    // triggers useEffect in ProductProvider
-    const [flipState, setFlipState] = useState(false);
+    const [info, setInfo] = useState("");
 
     // update cartState's initial state based on local storage
     useEffect(() => {
@@ -100,8 +97,6 @@ export const CartProvider = ({children}) => {
             }
 
         }
-      });
-
 
         if (arrayOfDuplicate.length > 0){
             newCartState.items.forEach((el) => {
@@ -119,9 +114,8 @@ export const CartProvider = ({children}) => {
             console.log("after add: ", cartState);
         }
     }
-  }
 
-  function removeFromCart(val){
+    function removeFromCart(val){
         let newCartState = cartState;
         let targetItem;
         let targetItemPosition;
@@ -156,15 +150,14 @@ export const CartProvider = ({children}) => {
 
     return (
         <CartContext.Provider
-       value={{
-        forceRerender,
+        value={{
         cartState,
         addToCart,
         removeFromCart,
         resetCart,
         info,
         setInfo,
-      }}
+        }}
         >
             {children}
         </CartContext.Provider>
