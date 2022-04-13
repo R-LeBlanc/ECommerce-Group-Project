@@ -11,7 +11,6 @@ export const ProductsProvider = ({ children }) => {
     const response = await fetch(`/products`);
     const data = await response.json();
     setAllProducts(data.data);
-    console.log({ data });
   }
 
   // fetching all products from DB.
