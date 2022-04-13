@@ -17,10 +17,12 @@ const Header = () => {
   return (
     <>
       <Wrapper onMouseLeave={handleMouseLeave}>
-        <Logo>
-          <Img src="../5.png" />
-          <Title>Reservoir Cats</Title>
-        </Logo>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <Logo>
+            <Img src="../5.png" />
+            <Title>Reservoir Cats</Title>
+          </Logo>
+        </Link>
         <Products>
           <Link to="/products">
             <AllProduct>All Products</AllProduct>
@@ -71,6 +73,7 @@ const Wrapper = styled.div`
   height: 60px;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 20px;
   /* font-family: Arial, Helvetica, sans-serif; */
 `;
 

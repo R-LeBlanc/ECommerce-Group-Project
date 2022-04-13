@@ -2,10 +2,20 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { CartContext } from "./CartContext";
+import { ProductsContext } from "./ProductContext";
 
 // after you make a purchase you will be automatically redirected to this page
 const ConfirmationPage = () => {
   const { cartState, info } = useContext(CartContext);
+  const { allProducts, setAllProducts } = useContext(ProductsContext);
+
+  // need to re fetch the products frrom the data base so that the
+  // updated stock amount is shown on the products page
+  const handleClick = async () => {
+    const response = await fetch(`/products`);
+    const data = await response.json();
+    setAllProducts(data.data);
+  };
 
   return (
     <>
@@ -24,11 +34,11 @@ const ConfirmationPage = () => {
             {/* we are doing a map here so that if the user buys more than one item it will show all of them */}
             {cartState.items.map((item) => {
               return (
-                <>
-                  <ItemContainer key={item._id}>
+                <ItemWrapper key={item._id}>
+                  <ItemContainer>
                     <span style={{ color: "black" }}>{item.name}</span>
                   </ItemContainer>
-                </>
+                </ItemWrapper>
               );
             })}
             <Info>
@@ -48,13 +58,19 @@ const ConfirmationPage = () => {
         <Img src="../1.png" />
       </Container>
       <BtnContainer>
-        <Link to="/products" style={{ textDecoration: "none" }}>
+        <Link
+          to="/products"
+          style={{ textDecoration: "none" }}
+          onClick={handleClick}
+        >
           <Button>Go back to shopping</Button>
         </Link>
       </BtnContainer>
     </>
   );
 };
+
+const ItemWrapper = styled.div``;
 const ItemContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
