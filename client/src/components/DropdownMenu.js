@@ -8,19 +8,19 @@ const DropdownMenu = () => {
     <>
       <Wrapper>
         <LifeStyle>
-          <Img src="../lions.jpg" />
+          <Img src="../2.png" />
           <Text>Lifestyle</Text>
         </LifeStyle>
         <Fitnes>
-          <Img src="../cheeta.jpg" />
+          <Img src="../6.png" />
           <Text>Fitness</Text>
         </Fitnes>
         <Medical>
-          <Img src="../scared-cat.jpg" />
+          <Img src="../3.png" />
           <Text>Medical</Text>
         </Medical>
         <Entertainment>
-          <Img src="../funny-cat.jpg" />
+          <Img src="../1.png" />
           <Text>Entertainment</Text>
         </Entertainment>
       </Wrapper>
@@ -36,7 +36,7 @@ const dropdownAnimation = keyframes`
 `;
 
 const Wrapper = styled.div`
-  background-color: var(--color-primary);
+  background-color: white;
   box-shadow: 0px 15px 16px -15px rgba(0, 0, 0, 1);
   display: flex;
   left: 0;
