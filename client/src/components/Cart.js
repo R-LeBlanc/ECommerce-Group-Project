@@ -6,7 +6,6 @@ import styled from "styled-components";
 import ConfirmationPage from "./ConfirmationPage";
 
 const Cart = () => {
-
   let navigate = useNavigate();
   const [creditCard, setCreditCard] = useState(null);
   const [ccv, setCcv] = useState(null);
@@ -16,13 +15,8 @@ const Cart = () => {
   const [lastName, setLastName] = useState(null);
   const [_id, set_id] = useState(null);
   const { allProducts } = React.useContext(ProductsContext);
-  const {
-    cartState,
-    addToCart,
-    removeFromCart,
-    resetCart,
-    setInfo,
-  } = useContext(CartContext);
+  const { cartState, addToCart, removeFromCart, resetCart, setInfo } =
+    useContext(CartContext);
 
   // Could not render product image from CartState
   // This function allows each CartItem to grab product image from allProducts
@@ -54,11 +48,11 @@ const Cart = () => {
       body: JSON.stringify(data.items),
     };
     const updateStock = async () => {
-      console.log("here");
+      // console.log("here");
       try {
         const response = await fetch("/products", update);
         const updated = await response.json();
-        console.log("hello", updated);
+        // console.log("hello", updated);
       } catch (err) {
         console.log(err);
       }
@@ -242,10 +236,10 @@ const Wrapper = styled.div`
   width: 50%;
   transform: translateX(-50%);
   margin-top: 5vh;
-  @media (max-width: 1439px) {
+  /* @media (max-width: 1439px) {
     left: 50%;
     transform: translateX(-50%);
-  }
+  } */
 `;
 const CartHeading = styled.h2`
   text-align: center;

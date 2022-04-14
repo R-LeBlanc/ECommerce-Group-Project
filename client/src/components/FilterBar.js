@@ -216,6 +216,7 @@ const CompanyDropdown = styled.div`
   overflow: scroll;
   position: absolute;
   width: 25vw;
+  z-index: 10;
 
   animation: ${dropdownAnimation} 800ms ease-in-out forwards;
   transform-origin: top center;
@@ -256,6 +257,7 @@ const LocationDropdown = styled.div`
   border-radius: 10px;
   position: absolute;
   width: 25vw;
+  z-index: 10;
 
   animation: ${dropdownAnimation} 800ms ease-in-out forwards;
   transform-origin: top center;
@@ -285,6 +287,7 @@ const SortDropdown = styled.div`
   border-radius: 10px;
   position: absolute;
   width: 25vw;
+  z-index: 10;
 
   animation: ${dropdownAnimation} 800ms ease-in-out forwards;
   transform-origin: top center;

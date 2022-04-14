@@ -108,7 +108,7 @@ export const CartProvider = ({ children }) => {
       cartDispatch({ type: "INCREASE-QUANTITY", payload: newCartState.items });
     } else {
       cartDispatch({ type: "ADD-TO-CART", payload: val });
-      console.log("after add: ", cartState);
+      // console.log("after add: ", cartState);
     }
   }
 

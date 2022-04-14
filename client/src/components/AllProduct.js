@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
+import { keyframes } from "styled-components";
 
 import { Link } from "react-router-dom";
 
@@ -8,9 +9,9 @@ import { CartContext } from "./CartContext";
 import FilterBar from "./FilterBar";
 
 const AllProduct = () => {
-  const { allProducts } = React.useContext(ProductsContext);
+  const { allProducts } = useContext(ProductsContext);
   const { cartState, addToCart } = useContext(CartContext);
-  const [add, setAdd] = useState("add to cart");
+  const [add, setAdd] = useState("Add to cart");
   const [filteredArray, setFilteredArray] = useState([]);
   const [filters, setFilters] = useState({
     isFiltering: false,
@@ -83,12 +84,24 @@ const AllProduct = () => {
     event.stopPropagation();
   }
 
+  //   const handleAddtoCartClick = () => {
+  // cartState.
+  //   }
+
   // map to display all products
   const renderItem = (array) => {
     return array.map((product) => {
       return (
         <Wrapper key={product._id}>
           <WidthControl>
+            {cartState &&
+              cartState.items.map((item) =>
+                item._id == product._id ? (
+                  <InCart key={item._id}>Added to cart!</InCart>
+                ) : (
+                  ""
+                )
+              )}
             <Link to={`/products/${product._id}`} onClick={handleClickDetails}>
               <ProductImg src={product.imageSrc} />
             </Link>
@@ -106,26 +119,39 @@ const AllProduct = () => {
                 )}
               </InfoPar>
             </SubContainer>
-            <Button
-              id={product._id}
-              className="unclicked"
-              onClick={() => {
-                addToCart({
-                  _id: product._id,
-                  name: product.name,
-                  price: product.price,
-                  stock: product.numInStock,
-                  quantityInCart: 1,
-                  companyId: product.companyId,
-                  body_location: product.body_location,
-                  category: product.category,
-                  img: product.imageSrc,
-                });
-                setAdd("Added to your cart");
-              }}
-            >
-              {add}
-            </Button>
+            {/* checks to see if the item is in stock, if not, the button is 
+          greyed out and disabled */}
+            {product.numInStock ? (
+              <Button
+                id={product._id}
+                className="unclicked"
+                onClick={() => {
+                  addToCart({
+                    _id: product._id,
+                    name: product.name,
+                    price: product.price,
+                    stock: product.numInStock,
+                    quantityInCart: 1,
+                    companyId: product.companyId,
+                    body_location: product.body_location,
+                    category: product.category,
+                    img: product.imageSrc,
+                  });
+                  // setAdd("Added to your cart");
+                }}
+              >
+                {add}
+              </Button>
+            ) : (
+              <Button
+                style={{
+                  backgroundColor: "var(--color-primary)",
+                  cursor: "not-allowed",
+                }}
+              >
+                Out of Stock
+              </Button>
+            )}
           </WidthControl>
         </Wrapper>
       );
@@ -154,17 +180,44 @@ const AllProduct = () => {
     </>
   );
 };
+
+const slideIn = keyframes`
+0% {
+  opacity: 0;
+  transform: scale(50%);
+}
+75% {
+  transform: scale(110%);
+}
+100% {
+  opacity: 1;
+  transform: scale(100%);
+}
+`;
+
 const WidthControl = styled.div`
   width: 300px;
   display: flex;
   flex-direction: column;
 `;
 
-const ImgLink = styled(Link)`
-  display: flex;
-  align-self: center;
-  justify-content: center;
+const InCart = styled.div`
+  background-color: var(--color-accent);
+  border-radius: 5px;
+  color: white;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 10px;
+  position: absolute;
+
+  animation: ${slideIn} 400ms ease-in-out;
 `;
+
+// const ImgLink = styled(Link)`
+//   display: flex;
+//   align-self: center;
+//   justify-content: center;
+// `;
 const ProductImg = styled.img`
   height: 190px;
   /* align-self: center;
@@ -215,6 +268,7 @@ const Wrapper = styled.div`
   box-shadow: 0 2px 4px 1px rgba(219, 198, 173, 0.4),
     0 4px 4px 1px rgba(219, 198, 173, 0.4),
     -1px -1px 2px 1px rgba(219, 198, 173, 0.4);
+
   /* Box-shadow - primary colour */
   /* box-shadow: 0 2px 4px 1px rgba(147, 147, 143, 0.2), 0 4px 4px 1px rgba(147, 147, 143, 0.2), -1px -1px 2px 1px rgba(147, 147, 143, 0.2); */
 `;
