@@ -6,5 +6,12 @@ Uses full MERN stack.
 
 The node server is RESTful and follows REST principles.
 
-No external UI libraries were allowed
----
+No external UI libraries were allowed.
+
+## Group Members
+
+r-muccio
+https://github.com/r-muccio
+
+MichelleDeblois
+https://github.com/MichelleDeblois
