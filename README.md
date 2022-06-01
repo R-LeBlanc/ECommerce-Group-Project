@@ -28,8 +28,14 @@ Users are able to
 
 - View all items in the _database_.
 - Purchase items that are in stock.
+
+![image](https://user-images.githubusercontent.com/69764797/171457804-dceabb57-7f4a-4af7-83b9-b9ea7d161b86.png)
+
 - View a cart containing the items they intend to purchase.
 - Edit cart before completing the purchase.
+
+![image](https://user-images.githubusercontent.com/69764797/171458126-c06fe6de-ab26-47e3-9bbf-14d2a4890b22.png)
+
 
 ### Backend Requirements
 
