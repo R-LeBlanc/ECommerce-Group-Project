@@ -35,7 +35,7 @@ Users are able to
 
 The Node server is
 
-- RESTful (use the right `method` for the right job).
+- RESTful.
 - Provides the FE with the required data in a clear and organized way.
 - Updates the _database_ as users make purchases.
 
