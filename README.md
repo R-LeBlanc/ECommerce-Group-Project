@@ -8,6 +8,9 @@ The node server is RESTful and follows REST principles.
 
 No external UI libraries were allowed.
 
+![image](https://user-images.githubusercontent.com/69764797/171453359-c59c6b49-2ee9-4468-a046-aece4367d4ca.png)
+
+
 ## Group Members
 
 r-muccio
@@ -15,3 +18,34 @@ https://github.com/r-muccio
 
 MichelleDeblois
 https://github.com/MichelleDeblois
+
+
+## MVP
+
+### Frontend
+
+Users are able to
+
+- View all items in the _database_.
+- Purchase items that are in stock.
+- View a cart containing the items they intend to purchase.
+- Edit cart before completing the purchase.
+
+### Backend Requirements
+
+The Node server is
+
+- RESTful (use the right `method` for the right job).
+- Provides the FE with the required data in a clear and organized way.
+- Updates the _database_ as users make purchases.
+
+### Stretch Goals
+
+- The user can search the store for items based on various criteria from the dropdown menus.
+- The filters stack with one another, narrowing down the search.
+- The filters can then be cleared. 
+
+https://user-images.githubusercontent.com/69764797/171456435-819b63d3-6dd0-4710-9cda-d6dd372f15c8.mp4
+
+
+
